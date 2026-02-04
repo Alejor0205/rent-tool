@@ -1,41 +1,22 @@
 package com.dardan.rent_tool.application.command;
 
-import com.dardan.rent_tool.domain.model.enumm.ToolStatus;
-
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class UpdateToolCommand {
-    private UUID id;
+public class CreateToolCommand {
     private String name;
     private UUID categoryId;
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
-    private ToolStatus status;
 
-    public UpdateToolCommand() {
+    public CreateToolCommand() {
     }
 
-    public UpdateToolCommand(UUID id,
-                             String name,
-                             UUID categoryId,
-                             BigDecimal hourlyRate,
-                             BigDecimal dailyRate,
-                             ToolStatus status) {
-        this.id = id;
+    public CreateToolCommand(String name, UUID categoryId, BigDecimal hourlyRate, BigDecimal dailyRate) {
         this.name = name;
         this.categoryId = categoryId;
         this.hourlyRate = hourlyRate;
         this.dailyRate = dailyRate;
-        this.status = status;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -68,13 +49,5 @@ public class UpdateToolCommand {
 
     public void setDailyRate(BigDecimal dailyRate) {
         this.dailyRate = dailyRate;
-    }
-
-    public ToolStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ToolStatus status) {
-        this.status = status;
     }
 }

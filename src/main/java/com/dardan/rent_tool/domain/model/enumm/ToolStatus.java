@@ -1,5 +1,8 @@
 package com.dardan.rent_tool.domain.model.enumm;
 
-public class ToolStatus {
-
+public enum ToolStatus {
+    AVAILABLE,
+    RENTED,
+    RETURNING,
+    MAINTENANCE
 }

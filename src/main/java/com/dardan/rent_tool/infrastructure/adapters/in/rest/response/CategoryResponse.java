@@ -1,5 +1,32 @@
 package com.dardan.rent_tool.infrastructure.adapters.in.rest.response;
 
-public class CategoryResponse {
+import java.util.UUID;
 
+public class CategoryResponse {
+    private UUID id;
+    private String name;
+
+    public CategoryResponse() {
+    }
+
+    public CategoryResponse(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

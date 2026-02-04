@@ -1,5 +1,6 @@
 package com.dardan.rent_tool.application.port.out;
 
-public class CategoryOutputPort {
+import com.dardan.rent_tool.domain.port.repository.CategoryRepository;
 
+public interface CategoryOutputPort extends CategoryRepository {
 }

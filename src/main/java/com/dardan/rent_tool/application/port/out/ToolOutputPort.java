@@ -1,5 +1,6 @@
 package com.dardan.rent_tool.application.port.out;
 
-public class ToolOutputPort {
+import com.dardan.rent_tool.domain.port.repository.RentToolRepository;
 
+public interface ToolOutputPort extends RentToolRepository {
 }
