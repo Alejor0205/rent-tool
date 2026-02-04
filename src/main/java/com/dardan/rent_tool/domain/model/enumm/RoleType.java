@@ -1,5 +1,7 @@
 package com.dardan.rent_tool.domain.model.enumm;
 
-public class RoleType {
-
+public enum RoleType {
+    ADMIN,
+    PROVIDER,
+    CUSTOMER
 }

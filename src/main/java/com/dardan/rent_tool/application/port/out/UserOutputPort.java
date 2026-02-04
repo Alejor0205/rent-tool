@@ -1,5 +1,6 @@
 package com.dardan.rent_tool.application.port.out;
 
-public class UserOutputPort {
+import com.dardan.rent_tool.domain.port.repository.UserRepository;
 
+public interface UserOutputPort extends UserRepository {
 }
