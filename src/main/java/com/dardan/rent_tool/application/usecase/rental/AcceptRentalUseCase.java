@@ -13,6 +13,8 @@ import com.dardan.rent_tool.domain.model.enumm.RentalStatus;
 import com.dardan.rent_tool.domain.model.enumm.ToolStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AcceptRentalUseCase {
 
@@ -35,6 +37,16 @@ public class AcceptRentalUseCase {
             .orElseThrow(() -> new NotFoundException("toolId", "La herramienta no existe."));
         if (tool.getStatus() != ToolStatus.AVAILABLE) {
             throw new ValidationException("tool.status", "La herramienta no está disponible.");
+        }
+        boolean hasOverlap = rentalOutputPort.existsOverlapExcluding(
+            rental.getToolId(),
+            rental.getId(),
+            rental.getStartDate(),
+            rental.getEndDate(),
+            List.of(RentalStatus.ACCEPTED, RentalStatus.ACTIVE)
+        );
+        if (hasOverlap) {
+            throw new ValidationException("rental.dates", "La herramienta ya tiene una reserva activa en ese rango.");
         }
 
         rental.setStatus(RentalStatus.ACCEPTED);

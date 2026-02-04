@@ -74,4 +74,30 @@ public class RentalPersistenceAdapter implements RentalOutputPort {
     public void deleteById(UUID id) {
         rentalRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsOverlap(UUID toolId,
+                                 java.time.LocalDate startDate,
+                                 java.time.LocalDate endDate,
+                                 java.util.List<com.dardan.rent_tool.domain.model.enumm.RentalStatus> statuses) {
+        return rentalRepository.existsOverlap(toolId, startDate, endDate, statuses);
+    }
+
+    @Override
+    public boolean existsOverlapExcluding(UUID toolId,
+                                          UUID excludeId,
+                                          java.time.LocalDate startDate,
+                                          java.time.LocalDate endDate,
+                                          java.util.List<com.dardan.rent_tool.domain.model.enumm.RentalStatus> statuses) {
+        return rentalRepository.existsOverlapExcluding(toolId, excludeId, startDate, endDate, statuses);
+    }
+
+    @Override
+    public java.util.List<Rental> findRequestedBefore(java.time.OffsetDateTime cutoff) {
+        return rentalRepository.findByStatusAndCreatedAtBefore(
+                com.dardan.rent_tool.domain.model.enumm.RentalStatus.REQUESTED, cutoff)
+            .stream()
+            .map(mapper::toDomain)
+            .toList();
+    }
 }
