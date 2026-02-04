@@ -14,7 +14,9 @@ import com.dardan.rent_tool.domain.model.enumm.RentalStatus;
 import com.dardan.rent_tool.domain.model.enumm.ToolStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 public class CreateRentalUseCase {
@@ -36,6 +38,14 @@ public class CreateRentalUseCase {
         if (command.getToolId() == null || command.getCustomerId() == null) {
             throw new ValidationException("rental", "toolId y customerId son obligatorios.");
         }
+        LocalDate startDate = command.getStartDate();
+        LocalDate endDate = command.getEndDate();
+        if (startDate == null || endDate == null) {
+            throw new ValidationException("rental.dates", "Las fechas de inicio y fin son obligatorias.");
+        }
+        if (endDate.isBefore(startDate)) {
+            throw new ValidationException("rental.dates", "La fecha de fin debe ser posterior a la de inicio.");
+        }
         RentTool tool = toolOutputPort.findById(command.getToolId())
             .orElseThrow(() -> new NotFoundException("toolId", "La herramienta no existe."));
         if (tool.getStatus() != ToolStatus.AVAILABLE) {
@@ -46,6 +56,15 @@ public class CreateRentalUseCase {
         }
         if (command.getProviderId() != null && userOutputPort.findById(command.getProviderId()).isEmpty()) {
             throw new NotFoundException("providerId", "El proveedor no existe.");
+        }
+        boolean hasOverlap = rentalOutputPort.existsOverlap(
+            command.getToolId(),
+            startDate,
+            endDate,
+            List.of(RentalStatus.REQUESTED, RentalStatus.ACCEPTED, RentalStatus.ACTIVE)
+        );
+        if (hasOverlap) {
+            throw new ValidationException("rental.dates", "La herramienta ya tiene reservas en ese rango.");
         }
 
         Rental rental = new Rental(
