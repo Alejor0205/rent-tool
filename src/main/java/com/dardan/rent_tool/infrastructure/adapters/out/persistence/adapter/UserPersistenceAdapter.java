@@ -44,4 +44,9 @@ public class UserPersistenceAdapter implements UserOutputPort {
     public boolean existsByEmailIgnoreCase(String email) {
         return userRepository.existsByEmailIgnoreCase(email);
     }
+
+    @Override
+    public Optional<User> findByEmailIgnoreCase(String email) {
+        return userRepository.findByEmailIgnoreCase(email).map(mapper::toDomain);
+    }
 }

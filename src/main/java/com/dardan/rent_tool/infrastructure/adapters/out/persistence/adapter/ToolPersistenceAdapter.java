@@ -53,4 +53,11 @@ public class ToolPersistenceAdapter implements ToolOutputPort {
     public boolean existsById(UUID id) {
         return toolRepository.existsById(id);
     }
+
+    @Override
+    public List<RentTool> findByStatus(com.dardan.rent_tool.domain.model.enumm.ToolStatus status) {
+        return toolRepository.findByStatus(status).stream()
+            .map(mapper::toDomain)
+            .toList();
+    }
 }

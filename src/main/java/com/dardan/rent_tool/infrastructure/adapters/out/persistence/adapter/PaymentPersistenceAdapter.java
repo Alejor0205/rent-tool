@@ -41,4 +41,9 @@ public class PaymentPersistenceAdapter implements PaymentOutputPort {
     public BigDecimal sumAmountByStatus(PaymentStatus status) {
         return paymentRepository.sumAmountByStatus(status);
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        paymentRepository.deleteById(id);
+    }
 }

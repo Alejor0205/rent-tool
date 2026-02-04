@@ -16,4 +16,6 @@ public interface UserRepository {
     void deleteById(UUID id);
 
     boolean existsByEmailIgnoreCase(String email);
+
+    Optional<User> findByEmailIgnoreCase(String email);
 }

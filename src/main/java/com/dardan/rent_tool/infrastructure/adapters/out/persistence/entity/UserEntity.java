@@ -33,15 +33,19 @@ public class UserEntity {
     @Column(nullable = false, length = 30)
     private RoleType role;
 
+    @Column(name = "password_hash", length = 120)
+    private String passwordHash;
+
     public UserEntity() {
     }
 
-    public UserEntity(UUID id, String fullName, String email, String phone, RoleType role) {
+    public UserEntity(UUID id, String fullName, String email, String phone, RoleType role, String passwordHash) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.passwordHash = passwordHash;
     }
 
     public UUID getId() {
@@ -82,5 +86,13 @@ public class UserEntity {
 
     public void setRole(RoleType role) {
         this.role = role;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 }

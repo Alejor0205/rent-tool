@@ -16,4 +16,6 @@ public interface PaymentRepository {
     List<Payment> findAll();
 
     BigDecimal sumAmountByStatus(PaymentStatus status);
+
+    void deleteById(UUID id);
 }

@@ -5,9 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
@@ -26,11 +29,13 @@ public class RentalEntity {
     @Column(nullable = false)
     private UUID toolId;
 
-    @Column(nullable = false)
-    private UUID customerId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private UserEntity customer;
 
-    @Column
-    private UUID providerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
+    private UserEntity provider;
 
     @Column(nullable = false)
     private LocalDate startDate;
@@ -53,8 +58,8 @@ public class RentalEntity {
 
     public RentalEntity(UUID id,
                         UUID toolId,
-                        UUID customerId,
-                        UUID providerId,
+                        UserEntity customer,
+                        UserEntity provider,
                         LocalDate startDate,
                         LocalDate endDate,
                         BigDecimal totalAmount,
@@ -62,8 +67,8 @@ public class RentalEntity {
                         OffsetDateTime createdAt) {
         this.id = id;
         this.toolId = toolId;
-        this.customerId = customerId;
-        this.providerId = providerId;
+        this.customer = customer;
+        this.provider = provider;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalAmount = totalAmount;
@@ -87,20 +92,20 @@ public class RentalEntity {
         this.toolId = toolId;
     }
 
-    public UUID getCustomerId() {
-        return customerId;
+    public UserEntity getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
+    public void setCustomer(UserEntity customer) {
+        this.customer = customer;
     }
 
-    public UUID getProviderId() {
-        return providerId;
+    public UserEntity getProvider() {
+        return provider;
     }
 
-    public void setProviderId(UUID providerId) {
-        this.providerId = providerId;
+    public void setProvider(UserEntity provider) {
+        this.provider = provider;
     }
 
     public LocalDate getStartDate() {

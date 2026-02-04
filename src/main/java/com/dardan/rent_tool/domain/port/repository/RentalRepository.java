@@ -19,4 +19,8 @@ public interface RentalRepository {
     List<ToolRentCount> findTopRentedTools();
 
     List<ToolIncome> findToolIncome();
+
+    List<Rental> findByCustomerId(UUID customerId);
+
+    void deleteById(UUID id);
 }

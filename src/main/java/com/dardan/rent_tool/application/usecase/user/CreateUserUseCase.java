@@ -34,7 +34,8 @@ public class CreateUserUseCase {
             command.getFullName().trim(),
             command.getEmail().trim(),
             command.getPhone(),
-            command.getRole()
+            command.getRole(),
+            null
         ));
         return mapper.toDTO(saved);
     }

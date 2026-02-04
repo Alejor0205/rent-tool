@@ -4,8 +4,10 @@ import com.dardan.rent_tool.application.port.out.RentalOutputPort;
 import com.dardan.rent_tool.domain.model.entity.Rental;
 import com.dardan.rent_tool.domain.model.valueobject.ToolIncome;
 import com.dardan.rent_tool.domain.model.valueobject.ToolRentCount;
+import com.dardan.rent_tool.infrastructure.adapters.out.persistence.entity.UserEntity;
 import com.dardan.rent_tool.infrastructure.adapters.out.persistence.mappers.RentalMapper;
 import com.dardan.rent_tool.infrastructure.adapters.out.persistence.repository.JpaRentalRepository;
+import com.dardan.rent_tool.infrastructure.adapters.out.persistence.repository.JpaUserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,15 +18,25 @@ import java.util.UUID;
 public class RentalPersistenceAdapter implements RentalOutputPort {
 
     private final JpaRentalRepository rentalRepository;
+    private final JpaUserRepository userRepository;
     private final RentalMapper mapper = new RentalMapper();
 
-    public RentalPersistenceAdapter(JpaRentalRepository rentalRepository) {
+    public RentalPersistenceAdapter(JpaRentalRepository rentalRepository, JpaUserRepository userRepository) {
         this.rentalRepository = rentalRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Rental save(Rental rental) {
-        return mapper.toDomain(rentalRepository.save(mapper.toEntity(rental)));
+        UserEntity customer = null;
+        UserEntity provider = null;
+        if (rental.getCustomerId() != null) {
+            customer = userRepository.findById(rental.getCustomerId()).orElseThrow();
+        }
+        if (rental.getProviderId() != null) {
+            provider = userRepository.findById(rental.getProviderId()).orElseThrow();
+        }
+        return mapper.toDomain(rentalRepository.save(mapper.toEntity(rental, customer, provider)));
     }
 
     @Override
@@ -49,5 +61,17 @@ public class RentalPersistenceAdapter implements RentalOutputPort {
         return rentalRepository.findToolIncome().stream()
             .map(row -> new ToolIncome((UUID) row[0], (java.math.BigDecimal) row[1]))
             .toList();
+    }
+
+    @Override
+    public List<Rental> findByCustomerId(UUID customerId) {
+        return rentalRepository.findByCustomer_Id(customerId).stream()
+            .map(mapper::toDomain)
+            .toList();
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        rentalRepository.deleteById(id);
     }
 }

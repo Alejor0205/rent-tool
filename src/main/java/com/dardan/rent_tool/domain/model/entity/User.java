@@ -10,16 +10,18 @@ public class User {
     private String email;
     private String phone;
     private RoleType role;
+    private String passwordHash;
 
     public User() {
     }
 
-    public User(UUID id, String fullName, String email, String phone, RoleType role) {
+    public User(UUID id, String fullName, String email, String phone, RoleType role, String passwordHash) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.passwordHash = passwordHash;
     }
 
     public UUID getId() {
@@ -60,5 +62,13 @@ public class User {
 
     public void setRole(RoleType role) {
         this.role = role;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 }

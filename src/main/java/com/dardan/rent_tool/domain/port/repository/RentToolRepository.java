@@ -16,4 +16,6 @@ public interface RentToolRepository {
     void deleteById(UUID id);
 
     boolean existsById(UUID id);
+
+    List<RentTool> findByStatus(com.dardan.rent_tool.domain.model.enumm.ToolStatus status);
 }

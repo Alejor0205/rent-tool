@@ -1,8 +1,10 @@
 package com.dardan.rent_tool.domain.model.enumm;
 
 public enum RentalStatus {
-    RESERVED,
+    REQUESTED,
+    ACCEPTED,
+    REJECTED,
     ACTIVE,
-    RETURNING,
-    CLOSED
+    RETURNED,
+    CANCELLED
 }

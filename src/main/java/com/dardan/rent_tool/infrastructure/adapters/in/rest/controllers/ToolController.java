@@ -8,6 +8,7 @@ import com.dardan.rent_tool.application.usecase.tool.ChangeToolStatusUseCase;
 import com.dardan.rent_tool.application.usecase.tool.CreateToolUseCase;
 import com.dardan.rent_tool.application.usecase.tool.DeleteToolUseCase;
 import com.dardan.rent_tool.application.usecase.tool.GetToolUseCase;
+import com.dardan.rent_tool.application.usecase.tool.ListAvailableToolsUseCase;
 import com.dardan.rent_tool.application.usecase.tool.ListToolsUseCase;
 import com.dardan.rent_tool.application.usecase.tool.UpdateToolUseCase;
 import com.dardan.rent_tool.infrastructure.adapters.in.rest.request.ChangeToolStatusRequest;
@@ -39,19 +40,22 @@ public class ToolController {
     private final UpdateToolUseCase updateToolUseCase;
     private final DeleteToolUseCase deleteToolUseCase;
     private final ChangeToolStatusUseCase changeToolStatusUseCase;
+    private final ListAvailableToolsUseCase listAvailableToolsUseCase;
 
     public ToolController(CreateToolUseCase createToolUseCase,
                           ListToolsUseCase listToolsUseCase,
                           GetToolUseCase getToolUseCase,
                           UpdateToolUseCase updateToolUseCase,
                           DeleteToolUseCase deleteToolUseCase,
-                          ChangeToolStatusUseCase changeToolStatusUseCase) {
+                          ChangeToolStatusUseCase changeToolStatusUseCase,
+                          ListAvailableToolsUseCase listAvailableToolsUseCase) {
         this.createToolUseCase = createToolUseCase;
         this.listToolsUseCase = listToolsUseCase;
         this.getToolUseCase = getToolUseCase;
         this.updateToolUseCase = updateToolUseCase;
         this.deleteToolUseCase = deleteToolUseCase;
         this.changeToolStatusUseCase = changeToolStatusUseCase;
+        this.listAvailableToolsUseCase = listAvailableToolsUseCase;
     }
 
     @PostMapping
@@ -70,6 +74,11 @@ public class ToolController {
     @GetMapping
     public List<ToolResponse> list() {
         return listToolsUseCase.execute().stream().map(this::toResponse).toList();
+    }
+
+    @GetMapping("/available")
+    public List<ToolResponse> listAvailable() {
+        return listAvailableToolsUseCase.execute().stream().map(this::toResponse).toList();
     }
 
     @GetMapping("/{id}")

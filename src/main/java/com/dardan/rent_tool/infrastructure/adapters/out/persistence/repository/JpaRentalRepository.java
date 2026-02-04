@@ -14,4 +14,6 @@ public interface JpaRentalRepository extends JpaRepository<RentalEntity, UUID> {
 
     @Query("select r.toolId, coalesce(sum(r.totalAmount), 0) from RentalEntity r group by r.toolId")
     List<Object[]> findToolIncome();
+
+    List<RentalEntity> findByCustomer_Id(UUID customerId);
 }

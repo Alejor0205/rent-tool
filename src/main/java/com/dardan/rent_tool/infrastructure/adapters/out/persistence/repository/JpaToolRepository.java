@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface JpaToolRepository extends JpaRepository<ToolEntity, UUID> {
+    java.util.List<ToolEntity> findByStatus(com.dardan.rent_tool.domain.model.enumm.ToolStatus status);
 }
