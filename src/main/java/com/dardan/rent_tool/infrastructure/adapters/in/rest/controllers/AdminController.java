@@ -6,8 +6,6 @@ import com.dardan.rent_tool.application.dto.DamageReportDTO;
 import com.dardan.rent_tool.application.dto.IncomeMetricsDTO;
 import com.dardan.rent_tool.application.dto.PaymentDTO;
 import com.dardan.rent_tool.application.dto.RentalDTO;
-import com.dardan.rent_tool.application.dto.ToolIncomeDTO;
-import com.dardan.rent_tool.application.dto.ToolRentCountDTO;
 import com.dardan.rent_tool.application.dto.UserDTO;
 import com.dardan.rent_tool.application.usecase.admin.IncomeMetricsUseCase;
 import com.dardan.rent_tool.application.usecase.admin.ListDamageReportsUseCase;
