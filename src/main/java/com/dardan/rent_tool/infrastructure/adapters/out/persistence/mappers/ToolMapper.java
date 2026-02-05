@@ -22,7 +22,9 @@ public class ToolMapper {
             category,
             entity.getHourlyRate(),
             entity.getDailyRate(),
-            entity.getStatus()
+            entity.getStatus(),
+            entity.getDescription(),
+            entity.getImagePath()
         );
     }
 
@@ -36,7 +38,9 @@ public class ToolMapper {
             categoryEntity,
             tool.getHourlyRate(),
             tool.getDailyRate(),
-            tool.getStatus()
+            tool.getStatus(),
+            tool.getDescription(),
+            tool.getImagePath()
         );
     }
 }

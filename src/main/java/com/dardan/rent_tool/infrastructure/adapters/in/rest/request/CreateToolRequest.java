@@ -8,6 +8,7 @@ public class CreateToolRequest {
     private UUID categoryId;
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
+    private String description;
 
     public CreateToolRequest() {
     }
@@ -49,5 +50,13 @@ public class CreateToolRequest {
 
     public void setDailyRate(BigDecimal dailyRate) {
         this.dailyRate = dailyRate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS tools (
     hourly_rate DECIMAL(10,2),
     daily_rate DECIMAL(10,2),
     status VARCHAR(30) NOT NULL,
+    description VARCHAR(500),
+    image_path VARCHAR(500),
     CONSTRAINT fk_tools_category FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 

@@ -39,7 +39,9 @@ public class CreateToolUseCase {
             category,
             command.getHourlyRate(),
             command.getDailyRate(),
-            ToolStatus.AVAILABLE
+            ToolStatus.AVAILABLE,
+            command.getDescription(),
+            null
         );
 
         return mapper.toDTO(toolOutputPort.save(tool));

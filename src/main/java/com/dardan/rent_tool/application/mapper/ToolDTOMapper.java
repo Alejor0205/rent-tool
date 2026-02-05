@@ -16,7 +16,9 @@ public class ToolDTOMapper {
             tool.getCategory() != null ? tool.getCategory().getName() : null,
             tool.getHourlyRate(),
             tool.getDailyRate(),
-            tool.getStatus()
+            tool.getStatus(),
+            tool.getDescription(),
+            tool.getImagePath()
         );
     }
 }
