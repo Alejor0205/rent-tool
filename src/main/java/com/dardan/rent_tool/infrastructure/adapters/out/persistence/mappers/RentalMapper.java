@@ -1,5 +1,7 @@
 package com.dardan.rent_tool.infrastructure.adapters.out.persistence.mappers;
 
+import java.util.UUID;
+
 import com.dardan.rent_tool.domain.model.entity.Rental;
 import com.dardan.rent_tool.infrastructure.adapters.out.persistence.entity.RentalEntity;
 import com.dardan.rent_tool.infrastructure.adapters.out.persistence.entity.UserEntity;
