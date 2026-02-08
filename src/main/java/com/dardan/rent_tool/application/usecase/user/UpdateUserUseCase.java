@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class UpdateUserUseCase {
 
     private final UserOutputPort userOutputPort;
+
     private final UserValidator validator = new UserValidator();
     private final UserDTOMapper mapper = new UserDTOMapper();
 

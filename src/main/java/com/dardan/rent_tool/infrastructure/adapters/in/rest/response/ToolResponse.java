@@ -13,6 +13,8 @@ public class ToolResponse {
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
     private ToolStatus status;
+    private String description;
+    private String imagePath;
 
     public ToolResponse() {
     }
@@ -23,7 +25,9 @@ public class ToolResponse {
                         String categoryName,
                         BigDecimal hourlyRate,
                         BigDecimal dailyRate,
-                        ToolStatus status) {
+                        ToolStatus status,
+                        String description,
+                        String imagePath) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
@@ -31,6 +35,8 @@ public class ToolResponse {
         this.hourlyRate = hourlyRate;
         this.dailyRate = dailyRate;
         this.status = status;
+        this.description = description;
+        this.imagePath = imagePath;
     }
 
     public UUID getId() {
@@ -87,5 +93,21 @@ public class ToolResponse {
 
     public void setStatus(ToolStatus status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

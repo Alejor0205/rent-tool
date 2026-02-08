@@ -8,15 +8,21 @@ public class CreateToolCommand {
     private UUID categoryId;
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
+    private String description;
 
     public CreateToolCommand() {
     }
 
-    public CreateToolCommand(String name, UUID categoryId, BigDecimal hourlyRate, BigDecimal dailyRate) {
+    public CreateToolCommand(String name,
+                             UUID categoryId,
+                             BigDecimal hourlyRate,
+                             BigDecimal dailyRate,
+                             String description) {
         this.name = name;
         this.categoryId = categoryId;
         this.hourlyRate = hourlyRate;
         this.dailyRate = dailyRate;
+        this.description = description;
     }
 
     public String getName() {
@@ -49,5 +55,13 @@ public class CreateToolCommand {
 
     public void setDailyRate(BigDecimal dailyRate) {
         this.dailyRate = dailyRate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

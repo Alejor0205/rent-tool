@@ -11,6 +11,7 @@ public class UpdateToolRequest {
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
     private ToolStatus status;
+    private String description;
 
     public UpdateToolRequest() {
     }
@@ -19,12 +20,14 @@ public class UpdateToolRequest {
                              UUID categoryId,
                              BigDecimal hourlyRate,
                              BigDecimal dailyRate,
-                             ToolStatus status) {
+                             ToolStatus status,
+                             String description) {
         this.name = name;
         this.categoryId = categoryId;
         this.hourlyRate = hourlyRate;
         this.dailyRate = dailyRate;
         this.status = status;
+        this.description = description;
     }
 
     public String getName() {
@@ -65,5 +68,13 @@ public class UpdateToolRequest {
 
     public void setStatus(ToolStatus status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

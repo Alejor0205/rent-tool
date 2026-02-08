@@ -53,6 +53,14 @@ public class UpdateToolUseCase {
             existing.setStatus(command.getStatus());
         }
 
+        if (command.getDescription() != null) {
+            existing.setDescription(command.getDescription());
+        }
+
+        if (command.getImagePath() != null) {
+            existing.setImagePath(command.getImagePath());
+        }
+
         return mapper.toDTO(toolOutputPort.save(existing));
     }
 }

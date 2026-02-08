@@ -12,6 +12,8 @@ public class RentTool {
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
     private ToolStatus status;
+    private String description;
+    private String imagePath;
 
     public RentTool() {
     }
@@ -21,13 +23,17 @@ public class RentTool {
                     Category category,
                     BigDecimal hourlyRate,
                     BigDecimal dailyRate,
-                    ToolStatus status) {
+                    ToolStatus status,
+                    String description,
+                    String imagePath) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.hourlyRate = hourlyRate;
         this.dailyRate = dailyRate;
         this.status = status;
+        this.description = description;
+        this.imagePath = imagePath;
     }
 
     public UUID getId() {
@@ -76,5 +82,21 @@ public class RentTool {
 
     public void setStatus(ToolStatus status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
