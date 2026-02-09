@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RentTools | Provider</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="rt-shell">
+    <aside class="rt-sidebar">
+      <div class="rt-brand">RentTools Provider</div>
+      <nav class="rt-nav">
+        <a href="#tools" class="active">Herramientas</a>
+        <a href="#rentals">Rentals</a>
+      </nav>
+    </aside>
+    <main class="rt-main">
+      <div class="rt-topbar">
+        <div>
+          <h2 class="mb-0">Panel Provider</h2>
+          <small class="text-muted">Gestiona tu inventario y solicitudes</small>
+        </div>
+        <button class="rt-btn-secondary" id="logoutBtn">Cerrar sesión</button>
+      </div>
+
+      <section id="tools" class="rt-grid rt-grid-2 mb-4">
+        <div class="rt-card">
+          <h4>Crear/Actualizar herramienta</h4>
+          <form id="toolForm" class="mt-3">
+            <input type="hidden" id="toolId">
+            <div class="rt-form-group">
+              <label>Nombre</label>
+              <input class="rt-input" id="toolName" required>
+            </div>
+            <div class="rt-form-group">
+              <label>Categoría</label>
+              <select class="rt-input" id="toolCategory"></select>
+            </div>
+            <div class="rt-grid rt-grid-2">
+              <div class="rt-form-group">
+                <label>Tarifa por hora</label>
+                <input class="rt-input" id="toolHourly" type="number" step="0.01">
+              </div>
+              <div class="rt-form-group">
+                <label>Tarifa por día</label>
+                <input class="rt-input" id="toolDaily" type="number" step="0.01">
+              </div>
+            </div>
+            <div class="rt-form-group">
+              <label>Descripción</label>
+              <textarea class="rt-input" id="toolDescription" rows="2"></textarea>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="rt-btn-primary" type="submit">Guardar</button>
+              <button class="rt-btn-secondary" type="button" id="resetToolForm">Limpiar</button>
+            </div>
+          </form>
+
+          <div class="mt-4">
+            <h5>Imagen</h5>
+            <div class="rt-alert">Solo disponible si el backend soporta multipart/form-data (confirmado en OpenAPI).</div>
+            <form id="imageForm" class="mt-2">
+              <input type="file" id="toolImage" class="rt-input" accept="image/*" />
+              <button class="rt-btn-secondary mt-2" type="submit">Subir imagen</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="rt-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4>Inventario</h4>
+            <button class="rt-btn-secondary" id="reloadTools">Recargar</button>
+          </div>
+          <div id="toolsTable" class="mt-3"></div>
+        </div>
+      </section>
+
+      <section id="rentals" class="rt-card">
+        <h4>Flujo de Rentals (por ID)</h4>
+        <div class="rt-alert">OpenAPI no expone listado de rentals para Provider. Puedes operar por ID directamente.</div>
+        <form id="rentalActionForm" class="mt-3">
+          <div class="rt-grid rt-grid-2">
+            <div class="rt-form-group">
+              <label>Rental ID</label>
+              <input class="rt-input" id="rentalId" required>
+            </div>
+            <div class="rt-form-group">
+              <label>Acción</label>
+              <select class="rt-input" id="rentalAction">
+                <option value="accept">Accept</option>
+                <option value="reject">Reject</option>
+                <option value="return">Return</option>
+              </select>
+            </div>
+          </div>
+          <div id="returnFields" class="rt-grid rt-grid-2" style="display:none;">
+            <div class="rt-form-group">
+              <label>Damaged</label>
+              <select class="rt-input" id="damaged">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
+              </select>
+            </div>
+            <div class="rt-form-group">
+              <label>Descripción de daño</label>
+              <input class="rt-input" id="damageDescription">
+            </div>
+          </div>
+          <button class="rt-btn-primary" type="submit">Ejecutar</button>
+        </form>
+      </section>
+    </main>
+  </div>
+  <nav class="rt-bottom-nav">
+    <a href="#tools">Herramientas</a>
+    <a href="#rentals">Rentals</a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/validators.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/router.js"></script>
+  <script>
+    Router.guard(['PROVIDER']);
+    document.getElementById('logoutBtn').addEventListener('click', () => Auth.logout());
+
+    const toolsTable = UI.qs('#toolsTable');
+    const toolForm = UI.qs('#toolForm');
+    const toolId = UI.qs('#toolId');
+    const toolCategory = UI.qs('#toolCategory');
+
+    async function loadCategories() {
+      const categories = await Api.apiClient.get('/api/categories');
+      toolCategory.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    }
+
+    async function loadTools() {
+      const data = await Api.apiClient.get('/api/tools');
+      UI.renderTable({
+        container: toolsTable,
+        columns: [
+          { key: 'name', label: 'Nombre' },
+          { key: 'categoryName', label: 'Categoría' },
+          { key: 'hourlyRate', label: 'Hora' },
+          { key: 'dailyRate', label: 'Día' },
+          { key: 'status', label: 'Estado' },
+          { key: 'actions', label: 'Acciones', render: row => `
+            <button class="btn btn-sm btn-outline-secondary" data-edit="${row.id}">Editar</button>
+            <button class="btn btn-sm btn-outline-danger" data-del="${row.id}">Eliminar</button>` }
+        ],
+        data,
+        pageSize: 6
+      });
+
+      UI.qsa('[data-edit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const row = data.find(t => t.id === btn.getAttribute('data-edit'));
+          if (!row) return;
+          toolId.value = row.id;
+          UI.qs('#toolName').value = row.name;
+          UI.qs('#toolDescription').value = row.description || '';
+          toolCategory.value = row.categoryId;
+          UI.qs('#toolHourly').value = row.hourlyRate || '';
+          UI.qs('#toolDaily').value = row.dailyRate || '';
+        });
+      });
+
+      UI.qsa('[data-del]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-del');
+          if (!confirm('¿Eliminar herramienta?')) return;
+          await Api.apiClient.delete(`/api/tools/${id}`);
+          UI.toast('Herramienta eliminada', 'success');
+          loadTools();
+        });
+      });
+    }
+
+    toolForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: UI.qs('#toolName').value.trim(),
+        categoryId: toolCategory.value,
+        hourlyRate: Number(UI.qs('#toolHourly').value) || 0,
+        dailyRate: Number(UI.qs('#toolDaily').value) || 0,
+        description: UI.qs('#toolDescription').value.trim()
+      };
+      if (!payload.name || !payload.categoryId) {
+        UI.toast('Nombre y categoría son obligatorios', 'warning');
+        return;
+      }
+      if (toolId.value) {
+        await Api.apiClient.put(`/api/tools/${toolId.value}`, payload);
+        UI.toast('Herramienta actualizada', 'success');
+      } else {
+        await Api.apiClient.post('/api/tools', payload);
+        UI.toast('Herramienta creada', 'success');
+      }
+      toolForm.reset();
+      toolId.value = '';
+      loadTools();
+    });
+
+    UI.qs('#resetToolForm').addEventListener('click', () => {
+      toolForm.reset();
+      toolId.value = '';
+    });
+
+    UI.qs('#reloadTools').addEventListener('click', loadTools);
+
+    UI.qs('#imageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!toolId.value) {
+        UI.toast('Selecciona una herramienta a editar para subir imagen.', 'warning');
+        return;
+      }
+      const file = UI.qs('#toolImage').files[0];
+      if (!file) {
+        UI.toast('Selecciona un archivo', 'warning');
+        return;
+      }
+      const fd = new FormData();
+      fd.append('file', file);
+      await Api.apiClient.post(`/api/tools/${toolId.value}/image`, fd);
+      UI.toast('Imagen subida', 'success');
+    });
+
+    UI.qs('#rentalAction').addEventListener('change', (e) => {
+      UI.qs('#returnFields').style.display = e.target.value === 'return' ? 'grid' : 'none';
+    });
+
+    UI.qs('#rentalActionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = UI.qs('#rentalId').value.trim();
+      const action = UI.qs('#rentalAction').value;
+      if (!id) return;
+      if (action === 'return') {
+        const payload = {
+          damaged: UI.qs('#damaged').value === 'true',
+          damageDescription: UI.qs('#damageDescription').value.trim()
+        };
+        await Api.apiClient.patch(`/api/provider/rentals/${id}/return`, payload);
+      } else {
+        await Api.apiClient.patch(`/api/provider/rentals/${id}/${action}`, {});
+      }
+      UI.toast('Acción ejecutada', 'success');
+      e.target.reset();
+      UI.qs('#returnFields').style.display = 'none';
+    });
+
+    loadCategories();
+    loadTools();
+  </script>
+</body>
+</html>
