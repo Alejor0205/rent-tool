@@ -3,52 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RentTools | Componentes</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/css/styles.css" rel="stylesheet">
+  <title>RentTools | Components</title>
 </head>
 <body>
-  <div class="container py-5">
-    <h1>Componentes</h1>
-    <div class="rt-grid rt-grid-3 mt-4">
-      <div class="rt-card rt-kpi">
-        <span>Total ingresos</span>
-        <strong>$12,450</strong>
-      </div>
-      <div class="rt-card">
-        <h4>Estado</h4>
-        <span class="rt-pill">AVAILABLE</span>
-        <span class="rt-pill success">PAID</span>
-        <span class="rt-pill danger">FAILED</span>
-      </div>
-      <div class="rt-card">
-        <h4>Loader</h4>
-        <div class="rt-loader"></div>
-      </div>
-    </div>
+  <template id="sidebar-admin">
+    <div class="rt-brand">RentTools Admin</div>
+    <nav class="rt-nav">
+      <a href="admin-users.html" data-section="users">Usuarios</a>
+      <a href="admin-rentals.html" data-section="rentals">Rentals</a>
+      <a href="admin-payments.html" data-section="payments">Payments</a>
+      <a href="admin-damage.html" data-section="damage">Daños</a>
+      <a href="admin-metrics.html" data-section="metrics">Métricas</a>
+    </nav>
+  </template>
 
-    <div class="rt-card mt-4">
-      <h4>Tabla con paginación</h4>
-      <div id="tableDemo" class="mt-3"></div>
-    </div>
-  </div>
+  <template id="sidebar-provider">
+    <div class="rt-brand">RentTools Provider</div>
+    <nav class="rt-nav">
+      <a href="provider-tools.html" data-section="tools">Herramientas</a>
+      <a href="provider-rentals.html" data-section="rentals">Rentals</a>
+    </nav>
+  </template>
 
-  <script src="../assets/js/ui.js"></script>
-  <script>
-    UI.renderTable({
-      container: document.getElementById('tableDemo'),
-      columns: [
-        { key: 'name', label: 'Nombre' },
-        { key: 'status', label: 'Estado' },
-        { key: 'amount', label: 'Monto' }
-      ],
-      data: [
-        { name: 'Taladro', status: 'AVAILABLE', amount: 50 },
-        { name: 'Martillo', status: 'RENTED', amount: 20 },
-        { name: 'Sierra', status: 'MAINTENANCE', amount: 65 }
-      ],
-      pageSize: 2
-    });
-  </script>
+  <template id="sidebar-customer">
+    <div class="rt-brand">RentTools Cliente</div>
+    <nav class="rt-nav">
+      <a href="client-explore.html" data-section="explore">Explorar</a>
+      <a href="client-rent.html" data-section="rent">Reservar</a>
+      <a href="client-history.html" data-section="history">Historial</a>
+    </nav>
+  </template>
+
+  <template id="topbar">
+    <div class="rt-topbar">
+      <div>
+        <h2 class="mb-0" data-title></h2>
+        <small class="text-muted" data-subtitle></small>
+      </div>
+      <button class="rt-btn-secondary" id="logoutBtn">Cerrar sesión</button>
+    </div>
+  </template>
+
+  <template id="bottom-admin">
+    <nav class="rt-bottom-nav">
+      <a href="admin-users.html" data-section="users">Usuarios</a>
+      <a href="admin-rentals.html" data-section="rentals">Rentals</a>
+      <a href="admin-payments.html" data-section="payments">Payments</a>
+      <a href="admin-damage.html" data-section="damage">Daños</a>
+      <a href="admin-metrics.html" data-section="metrics">Métricas</a>
+    </nav>
+  </template>
+
+  <template id="bottom-provider">
+    <nav class="rt-bottom-nav">
+      <a href="provider-tools.html" data-section="tools">Herramientas</a>
+      <a href="provider-rentals.html" data-section="rentals">Rentals</a>
+    </nav>
+  </template>
+
+  <template id="bottom-customer">
+    <nav class="rt-bottom-nav">
+      <a href="client-explore.html" data-section="explore">Explorar</a>
+      <a href="client-rent.html" data-section="rent">Reservar</a>
+      <a href="client-history.html" data-section="history">Historial</a>
+    </nav>
+  </template>
 </body>
 </html>

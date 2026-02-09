@@ -24,9 +24,9 @@
   }
 
   function routeFromRole(role) {
-    if (role === 'ADMIN') return '../pages/admin.html';
-    if (role === 'PROVIDER') return '../pages/provider.html';
-    if (role === 'CUSTOMER') return '../pages/client.html';
+    if (role === 'ADMIN') return '../pages/admin-users.html';
+    if (role === 'PROVIDER') return '../pages/provider-tools.html';
+    if (role === 'CUSTOMER') return '../pages/client-explore.html';
     return '../pages/login.html';
   }
 
