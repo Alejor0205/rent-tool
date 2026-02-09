@@ -1,6 +1,8 @@
 (function (global) {
+  const FRONTEND_BASE = '/frontend';
+
   function goToLogin() {
-    window.location.href = '../pages/login.html';
+    window.location.href = FRONTEND_BASE + '/pages/login.html';
   }
 
   function guard(allowedRoles) {
@@ -19,21 +21,21 @@
 
     const role = global.Auth.getRole();
     if (allowedRoles && allowedRoles.length && !allowedRoles.includes(role)) {
-      window.location.href = '../index.html?err=forbidden';
+      window.location.href = FRONTEND_BASE + '/index.html?err=forbidden';
     }
   }
 
   function routeFromRole(role) {
-    if (role === 'ADMIN') return '../pages/admin-users.html';
-    if (role === 'PROVIDER') return '../pages/provider-tools.html';
-    if (role === 'CUSTOMER') return '../pages/client-explore.html';
-    return '../pages/login.html';
+    if (role === 'ADMIN') return FRONTEND_BASE + '/pages/admin-users.html';
+    if (role === 'PROVIDER') return FRONTEND_BASE + '/pages/provider-tools.html';
+    if (role === 'CUSTOMER') return FRONTEND_BASE + '/pages/client-explore.html';
+    return FRONTEND_BASE + '/pages/login.html';
   }
 
   function redirectLanding() {
     const token = global.Auth.getToken();
     if (!token) {
-      window.location.href = './pages/login.html';
+      window.location.href = FRONTEND_BASE + '/pages/login.html';
       return;
     }
     if (global.Auth.isTokenExpired(token)) {
@@ -44,5 +46,5 @@
     window.location.href = routeFromRole(role);
   }
 
-  global.Router = { guard, routeFromRole, redirectLanding, goToLogin };
+  global.Router = { guard, routeFromRole, redirectLanding, goToLogin, FRONTEND_BASE };
 })(window);

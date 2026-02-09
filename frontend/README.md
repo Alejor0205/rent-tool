@@ -8,9 +8,13 @@ Justificación Bootstrap 5: entrega layout responsivo y componentes listos sin añ
 - En la pantalla de login puedes cambiar la Base URL y guardarla en `localStorage`.
 - Por defecto se usa `http://localhost:8080`.
 
-## Correr en local
-1. Abre `frontend/index.html` con Live Server o cualquier servidor estático.
-2. Asegúrate de que el backend esté corriendo.
+## Correr en local (Live Server)
+Opción recomendada:
+- Abre `frontend/index.html` con Live Server.
+- URL esperada: `http://localhost:5500/frontend/index.html`
+
+Si abres Live Server desde la raíz del repo, asegúrate de entrar a:
+- `http://localhost:5500/frontend/index.html`
 
 ## Probar roles
 - Roles soportados según OpenAPI: `ADMIN`, `PROVIDER`, `CUSTOMER`.
@@ -23,6 +27,7 @@ Justificación Bootstrap 5: entrega layout responsivo y componentes listos sin añ
 - Auto-logout cuando `exp` ha expirado.
 - Tablas con paginación, orden y filtro en el cliente.
 - Formularios con validaciones básicas en cliente.
+- Navegación modular por páginas, con layout unificado por `components.html`.
 
 ## TODOs (faltantes en OpenAPI)
 - Listado de rentals para Provider (no existe endpoint para listar).

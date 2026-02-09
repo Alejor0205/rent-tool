@@ -5,7 +5,8 @@
     const bottomHost = document.getElementById('rt-bottom');
     if (!sidebarHost || !topbarHost || !bottomHost) return;
 
-    const res = await fetch('components.html');
+    const base = (window.Router && Router.FRONTEND_BASE) ? Router.FRONTEND_BASE : '/frontend';
+    const res = await fetch(base + '/pages/components.html');
     const html = await res.text();
     const doc = new DOMParser().parseFromString(html, 'text/html');
 
