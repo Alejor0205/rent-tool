@@ -9,6 +9,14 @@
       goToLogin();
       return;
     }
+
+    if (global.Auth.isTokenExpired(token)) {
+      global.Auth.logout('Tu sesión ha expirado.');
+      return;
+    }
+
+    global.Auth.startAutoLogout();
+
     const role = global.Auth.getRole();
     if (allowedRoles && allowedRoles.length && !allowedRoles.includes(role)) {
       window.location.href = '../index.html?err=forbidden';
@@ -26,6 +34,10 @@
     const token = global.Auth.getToken();
     if (!token) {
       window.location.href = './pages/login.html';
+      return;
+    }
+    if (global.Auth.isTokenExpired(token)) {
+      global.Auth.logout('Tu sesión ha expirado.');
       return;
     }
     const role = global.Auth.getRole();

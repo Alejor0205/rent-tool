@@ -6,10 +6,16 @@
 
   let expTimer = null;
 
+  function padBase64(input) {
+    const pad = input.length % 4;
+    if (pad === 0) return input;
+    return input + '='.repeat(4 - pad);
+  }
+
   function decodeJwt(token) {
     try {
       const payload = token.split('.')[1];
-      const padded = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = padBase64(payload.replace(/-/g, '+').replace(/_/g, '/'));
       const json = atob(padded);
       return JSON.parse(json);
     } catch (err) {
@@ -46,6 +52,13 @@
         logout('Tu sesión ha expirado.');
       }
     }, 10000);
+  }
+
+  function isTokenExpired(token) {
+    const decoded = decodeJwt(token);
+    if (!decoded || !decoded.exp) return false;
+    const now = Math.floor(Date.now() / 1000);
+    return now >= decoded.exp;
   }
 
   async function login(payload) {
@@ -87,5 +100,15 @@
     return localStorage.getItem(USER_KEY);
   }
 
-  global.Auth = { login, register, logout, getToken, getRole, getUserId, decodeJwt, startAutoLogout };
+  global.Auth = {
+    login,
+    register,
+    logout,
+    getToken,
+    getRole,
+    getUserId,
+    decodeJwt,
+    startAutoLogout,
+    isTokenExpired
+  };
 })(window);
