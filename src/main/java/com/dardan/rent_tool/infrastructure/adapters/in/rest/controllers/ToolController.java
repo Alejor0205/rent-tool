@@ -10,6 +10,7 @@ import com.dardan.rent_tool.application.usecase.tool.DeleteToolUseCase;
 import com.dardan.rent_tool.application.usecase.tool.GetToolUseCase;
 import com.dardan.rent_tool.application.usecase.tool.ListAvailableToolsUseCase;
 import com.dardan.rent_tool.application.usecase.tool.ListToolsUseCase;
+import com.dardan.rent_tool.application.usecase.tool.SearchToolUseCase;
 import com.dardan.rent_tool.application.usecase.tool.UpdateToolUseCase;
 import com.dardan.rent_tool.infrastructure.adapters.in.rest.request.ChangeToolStatusRequest;
 import com.dardan.rent_tool.infrastructure.adapters.in.rest.request.CreateToolRequest;
@@ -170,6 +171,11 @@ public class ToolController {
         }
     }
 
+    @GetMapping("/{id}/search")
+    public List<Tool> serachEntity(@PathVariable UUID name {
+        return SearchToolUseCase.findByName(name);
+    }
+
     private ToolResponse toResponse(ToolDTO dto) {
         return new ToolResponse(
             dto.getId(),
@@ -181,6 +187,8 @@ public class ToolController {
             dto.getStatus(),
             dto.getDescription(),
             dto.getImagePath()
+            
         );
     }
+    
 }

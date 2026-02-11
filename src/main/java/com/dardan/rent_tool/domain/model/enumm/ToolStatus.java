@@ -4,5 +4,6 @@ public enum ToolStatus {
     AVAILABLE,
     RENTED,
     RETURNING,
+    TALADRO,
     MAINTENANCE
 }

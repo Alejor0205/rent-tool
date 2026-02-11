@@ -13,6 +13,8 @@ public interface RentToolRepository {
 
     List<RentTool> findAll();
 
+    List<RentTool> findByName(UUID name);
+
     void deleteById(UUID id);
 
     boolean existsById(UUID id);
