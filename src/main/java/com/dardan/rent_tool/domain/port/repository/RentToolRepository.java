@@ -1,6 +1,7 @@
 package com.dardan.rent_tool.domain.port.repository;
 
 import com.dardan.rent_tool.domain.model.entity.RentTool;
+import com.dardan.rent_tool.domain.model.entity.Tool;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,8 @@ public interface RentToolRepository {
     Optional<RentTool> findById(UUID id);
 
     List<RentTool> findAll();
+
+    List<Tool> findByName(String name);
 
     void deleteById(UUID id);
 
