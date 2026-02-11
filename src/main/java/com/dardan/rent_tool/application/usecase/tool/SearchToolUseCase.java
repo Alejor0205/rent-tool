@@ -1,7 +1,9 @@
 package com.dardan.rent_tool.application.usecase.tool;
 
 import java.util.List;
+import java.util.UUID;
 
+import javax.tools.Tool;
 
 import com.dardan.rent_tool.application.dto.ToolDTO;
 
@@ -23,5 +25,10 @@ public class SearchToolUseCase {
             .filter(toolOutputPort -> tool.getName().toLowerCase().contains(name.toList)
             .collect(controllers.toList))
         }
+    }
+
+    public static List<Tool> findByName(UUID name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByName'");
     }
 }

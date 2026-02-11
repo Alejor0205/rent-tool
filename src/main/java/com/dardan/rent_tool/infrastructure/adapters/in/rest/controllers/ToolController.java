@@ -173,14 +173,14 @@ public class ToolController {
 
     @GetMapping("/{id}/search")
     public List<Tool> serachEntity(@PathVariable UUID name {
-        return SearchToolUseCase.findByName(name);
+        return SearchToolUseCase.findByName(name)
     }
 
     private ToolResponse toResponse(ToolDTO dto) {
         return new ToolResponse(
             dto.getId(),
             dto.getName(),
-            dto.getCategoryId(),
+            dto.getCategoryId(),z
             dto.getCategoryName(),
             dto.getHourlyRate(),
             dto.getDailyRate(),
